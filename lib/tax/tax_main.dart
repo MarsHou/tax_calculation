@@ -24,6 +24,7 @@ class _TaxState extends State<TaxWidget> {
       new TextEditingController();
   final TextEditingController _controllerOther = new TextEditingController();
   bool check = false;
+  double month = 1;
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -37,10 +38,35 @@ class _TaxState extends State<TaxWidget> {
           _buildInputRow("税前收入：", _controllerIncome, TextInputType.number),
           _buildInputRow(
               "年终奖：", _controllerYearEndAwards, TextInputType.number),
+          new Container(
+              padding: const EdgeInsets.only(top: 20, left: 20),
+              child: new Row(
+                children: <Widget>[
+                  Text("奖金发放月份（${this.month.toInt()}月）："),
+                  Expanded(
+                    child: new Slider(
+                      value: this.month,
+                      divisions: 11,
+                      max: 12,
+                      min: 1,
+                      label: "${this.month.toInt()}",
+                      activeColor: Colors.blue,
+                      onChanged: (double val) {
+                        setState(() {
+                          this.month = val;
+                        });
+                      },
+                    ),
+                  )
+                ],
+              )),
           _buildInputRow("专项扣除：", _controllerSpecial, TextInputType.number),
           _buildInputRow("其它：", _controllerOther, TextInputType.number),
           new CheckboxListTile(
-            title: new Text("是否选择年终奖不计入全年纳税基数"),
+            title: new Text(
+              "是否选择年终奖不计入全年纳税基数",
+              style: TextStyle(color: Colors.blue),
+            ),
             value: this.check,
             onChanged: (bool value) {
               setState(() {
@@ -66,21 +92,26 @@ class _TaxState extends State<TaxWidget> {
               if (_controllerOther.text.isNotEmpty) {
                 other = double.parse(_controllerOther.text);
               }
-              _calculationTax(
-                  preTaxIncome, yearEndAwards, specialDeduction, other);
+              _calculationTax(context, preTaxIncome, yearEndAwards,
+                  specialDeduction, other);
             },
-            child: new Text("计算"),
+            child: new Text(
+              "计算",
+              style: TextStyle(color: Colors.blue),
+            ),
           )
         ],
       ),
     );
   }
 
-  _calculationTax(double preTaxIncome, double yearEndAwards,
-      double specialDeduction, double other) {
+  _calculationTax(BuildContext context, double preTaxIncome,
+      double yearEndAwards, double specialDeduction, double other) {
     final taxUtil = new TaxUtil();
-    final yearModel = taxUtil.getTaxDetailsByPreTaxIncome(
-        preTaxIncome, specialDeduction, other, yearEndAwards, 2, this.check);
+    final yearModel = taxUtil.getTaxDetailsByPreTaxIncome(preTaxIncome,
+        specialDeduction, other, yearEndAwards, this.month.toInt(), this.check);
+    Navigator.push(
+        context, new MaterialPageRoute(builder: (context) => new TaxList(yearModel)));
   }
 
   _buildInputRow(String title, TextEditingController controller,
