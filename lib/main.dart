@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:tax_calculation/tax/tax_main.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(new TaxMain());
 
 class MyApp extends StatelessWidget {
   @override
