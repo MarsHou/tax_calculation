@@ -17,7 +17,9 @@ flutter run
 ## Show
 #### 年终奖一次性发放计算方式
 
-![勾选不计入全年纳税基数](https://github.com/MarsHou/tax_calculation/blob/master/image/WeChat3a901687f0d5736ff02fee3e27ed649d.png){:height="374px" width="188px"}
+<p align="center">
+	<img src="https://github.com/MarsHou/tax_calculation/blob/master/image/WeChat3a901687f0d5736ff02fee3e27ed649d.png" alt="勾选不计入全年纳税基数"  width="188" height="374">
+</p>
 
 ![全年收入详情](https://github.com/MarsHou/tax_calculation/blob/master/image/WeChatd2ddeced60306db1b4aae1febf8f97c1.png)
 
