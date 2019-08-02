@@ -124,7 +124,7 @@ class TaxUtil {
     allPayableTax += yeaPayableTax;
     allRealIncome += realyearEndAwards;
 
-    return YearTaxModel(listMonth, allPayableTax, allRealIncome,
+    return YearTaxModel(listMonth, preTaxIncome, allPayableTax, allRealIncome,
         realyearEndAwards, yeaPayableTax);
   }
 }

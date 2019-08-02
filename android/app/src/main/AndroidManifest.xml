@@ -8,7 +8,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="tax_calculation"
+        android:label="TAX Calculator"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
