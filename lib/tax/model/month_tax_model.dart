@@ -2,7 +2,7 @@ class MonthTaxModel {
   int month;
   double allPayable;
   double payableTax;
-  double meuhIf;
+  List<double> meuhIf;
   double other;
   double realIncome;
   MonthTaxModel(this.month, this.allPayable, this.payableTax, this.meuhIf,

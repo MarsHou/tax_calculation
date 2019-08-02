@@ -46,15 +46,24 @@ class TaxUtil {
     ];
   }
 
-  getMedicalEndowmentUnemploymentHousingTax(double preTaxIncome) {
+  _getMedicalEndowmentUnemploymentHousingTax(double preTaxIncome) {
     return preTaxIncome *
         (medicalRate + endowmentRate + unemploymentRate + housingRate);
+  }
+
+  _getMedicalEndowmentUnemploymentHousingTaxList(double preTaxIncome) {
+    return <double>[
+      preTaxIncome * medicalRate,
+      preTaxIncome * endowmentRate,
+      preTaxIncome * unemploymentRate,
+      preTaxIncome * housingRate
+    ];
   }
 
   getTaxDetailsByPreTaxIncome(double preTaxIncome, double specialDeduction,
       double other, double yearEndAwards, int month, bool isOneTime) {
     final meuhIf =
-        getMedicalEndowmentUnemploymentHousingTax(preTaxIncome); //需缴三险一金金额
+        _getMedicalEndowmentUnemploymentHousingTax(preTaxIncome); //需缴三险一金金额
 
     final payable =
         (preTaxIncome - allowance - meuhIf - specialDeduction); //应纳税额
@@ -89,10 +98,14 @@ class TaxUtil {
         realIncome += yearEndAwards;
       }
       allRealIncome += realIncome;
-      print(
-          "$i 月纳税基数：$allPayable 纳税：$payableTax ; 三险一金：${meuhIf.toStringAsFixed(1)}; 其它费用：$other ; 实发工资：$realIncome");
+
       listMonth.add(new MonthTaxModel(
-          i, allPayable, payableTax, meuhIf, other, realIncome));
+          i,
+          allPayable,
+          payableTax,
+          _getMedicalEndowmentUnemploymentHousingTaxList(preTaxIncome),
+          other,
+          realIncome));
     }
     double realyearEndAwards = 0;
     double yeaPayableTax = 0;
@@ -107,11 +120,10 @@ class TaxUtil {
         }
       }
       realyearEndAwards = yearEndAwards - yeaPayableTax;
-      print("全年一次性奖金计算 纳税：$yeaPayableTax ；年终奖实发：$realyearEndAwards");
     }
     allPayableTax += yeaPayableTax;
     allRealIncome += realyearEndAwards;
-    print('累计纳税：$allPayableTax ; 累计实发工资：$allRealIncome');
+
     return YearTaxModel(listMonth, allPayableTax, allRealIncome,
         realyearEndAwards, yeaPayableTax);
   }

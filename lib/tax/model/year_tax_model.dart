@@ -4,8 +4,8 @@ class YearTaxModel {
   List<MonthTaxModel> listMonth;
   double allPayableTax;
   double allRealIncome;
-  double yearEndAwards;
+  double yeaRealIncome;
   double yeaPayableTax;
   YearTaxModel(this.listMonth, this.allPayableTax, this.allRealIncome,
-      this.yearEndAwards, this.yeaPayableTax);
+      this.yeaRealIncome, this.yeaPayableTax);
 }
