@@ -85,23 +85,23 @@ class TaxListState extends State<StatefulWidget> {
     ]);
   }
 
+  _buildHeaderTableRow(String title, String val, [double fontSize = 15]) {
+    return TableRow(children: <Widget>[_buildRichText(title, val, fontSize)]);
+  }
+
   _buildHeaderView(YearTaxModel yearModel) {
     final widgets = <TableRow>[];
-    widgets.add(_buildTableRow(
-        "税 前 月 薪：", yearModel.preTaxIncome.toStringAsFixed(1), "", "", 16));
-    widgets.add(_buildTableRow(
-        "累 计 纳 税：",
-        yearModel.allPayableTax.toStringAsFixed(1),
-        "累 计 实 发：",
-        yearModel.allRealIncome.toStringAsFixed(1),
-        17));
+    widgets.add(_buildHeaderTableRow(
+        "税 前 月 薪：", yearModel.preTaxIncome.toStringAsFixed(1), 17));
+    widgets.add(_buildHeaderTableRow(
+        "累 计 纳 税：", yearModel.allPayableTax.toStringAsFixed(1), 17));
+    widgets.add(_buildHeaderTableRow(
+        "累 计 实 发：", yearModel.allRealIncome.toStringAsFixed(1), 17));
     if (yearModel.yeaRealIncome != null && yearModel.yeaRealIncome > 0) {
-      widgets.add(_buildTableRow(
-          "年终奖纳税：",
-          yearModel.yeaPayableTax.toStringAsFixed(1),
-          "年终奖实发：",
-          yearModel.yeaRealIncome.toStringAsFixed(1),
-          17));
+      widgets.add(_buildHeaderTableRow(
+          "年终奖纳税：", yearModel.yeaPayableTax.toStringAsFixed(1), 17));
+      widgets.add(_buildHeaderTableRow(
+          "年终奖实发：", yearModel.yeaRealIncome.toStringAsFixed(1), 17));
     }
     return Container(
       padding: const EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
